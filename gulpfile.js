@@ -98,14 +98,6 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // inject bower components
 gulp.task('wiredep', () => {
-  // TODO(Hom): scss wiredep
-  // gulp.src('app/sass/*.scss')
-  //   .pipe(filter(file => file.stat && file.stat.size))
-  //   .pipe(wiredep({
-  //     ignorePath: /^(\.\.\/)+/
-  //   }))
-  //   .pipe(gulp.dest('.tmp/css'));
-
   gulp.src('app/*.html')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)*\.\./
