@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!--build:css css/main.min.css-->
+  <link rel="stylesheet" href="./css/index.css">
+  <!--endbuild-->
+</head>
+<body>
+  <h2>utils</h2>
+</body>
+<!--build:js js/utils.min.js-->
+<script src="./js/utils.js"></script>
+<!--endbuild-->
+ <script type="text/javascript">
+   /* version 0.2
+   *
+   * @module isType           // 类型检测
+   * @module MAX              // 取数组最大值
+   * @module MIN              // 取数组最小值
+   * @module sort             // 数组排序加强
+   * @module trim             // 去除字符左右空格　
+   * @module isMobile         // 校验手机号
+   * @module isSMs            // 校验短信
+   * @module isNull           // 判断字符为空
+   * @module isCard           // 校验身份证号
+   * @module isEmail          // 校验邮箱
+   * @module numberOne        // 手机号码截取中间四位
+   * @module numberTwo        // 手机号码显示后四位
+   * @module format           // 日期格式化
+   * @module diff             // 日期相差天数
+   *
+   */
+   console.info("类型检测"+"----->"+T.isType({}));
+   var arr =[13,24,3,51];
+   console.info("取数组最大值"+"----->"+T.MAX(arr));
+   console.info("取数组最小值"+"----->"+T.MIN(arr));
+   console.info("数组排序加强"+"----->"+T.sort(arr));
+   console.info("去除字符左右空格　"+"----->"+T.trim('   aaa   '));
+   console.info("校验手机号"+"----->"+T.isMobile("13721034902"));
+   console.info("校验短信"+"----->"+T.isSMs("123456"));
+   console.info("判断字符为空"+"----->"+T.isNull(""));
+   console.info("校验身份证号"+"----->"+T.isCard("420881199411298114"));
+   console.info("校验邮箱"+"----->"+T.isEmail("123@QQ.COM"));
+   console.info("手机号码截取中间四位"+"----->"+T.numberOne("17721034902"));
+   console.info("手机号码显示后四位"+"----->"+T.numberTwo("17721034902"));
+   var d = new Date()
+   console.info("日期格式化"+"----->"+d.format('yyyy/MM/dd'))
+   console.info("时差"+"----->"+d.format('yyyy/MM/dd')+"-"+d.diff( new Date("2017-05-10")))
+ </script>
+</html>

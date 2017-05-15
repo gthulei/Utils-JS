@@ -1,0 +1,16 @@
+@charset "UTF-8";
+@import "_mixins",
+"_reset",
+"_grid";
+$imgRoot:'../images/';
+$green-bg: #1bb28b;
+$blue-bg: #3DA3F8;
+$color-error: #f2787b;
+html,
+body {
+  width: 100%;
+  font-size: 62.5%;
+  overflow-x: hidden;
+  font-size: 12px;
+  color: #f60
+}
