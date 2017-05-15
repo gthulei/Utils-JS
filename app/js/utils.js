@@ -15,7 +15,9 @@
  * @module numberOne        // 手机号码截取中间四位
  * @module numberTwo        // 手机号码显示后四位
  * @module format           // 日期格式化
- * @module diff             // 日期相差天数
+ * @module GetCookies       // 存Cookies
+ * @module GetCookies       // 取Cookies
+ * @module getCookieVal     // 清空Cookies
  *
  */
 (function () {
@@ -57,7 +59,7 @@
   }
 
   // 检验短信
-  T.isSMs = function (value,leng) {
+  T.isSMs = function (value, leng) {
     var v = leng || 6;
     if (+v == 6) {
       return /^\d{6}$/.test(value);
@@ -123,5 +125,54 @@
     return Math.ceil((this - date) / (1000 * 60 * 60 * 24)) - 1;
   }
 
+  // 设置Cookies
+  T.SetCookies = function (name, value) {
+    var argv = arguments;
+    var argc = arguments.length;
+    var expires = (argc > 2) ? argv[2] : null;
+    var path = (argc > 3) ? argv[3] : '/';
+    var domain = (argc > 4) ? argv[4] : null;
+    var secure = (argc > 5) ? argv[5] : false;
+    document.cookie = name + "=" + escape(value) +
+      ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
+      ((path == null) ? "" : ("; path=" + path)) +
+      ((domain == null) ? "" : ("; domain=" + domain)) +
+      ((secure == true) ? "; secure" : "");
+  };
+
+  // 读取Cookies
+  T.GetCookies = function (name) {
+    var arg = name + "=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    var j = 0;
+    while (i < clen) {
+      j = i + alen;
+      if (document.cookie.substring(i, j) == arg)
+        return getCookieVal(j);
+      i = document.cookie.indexOf(" ", i) + 1;
+      if (i == 0)
+        break;
+    }
+    return null;
+  };
+
+  // 清除Cookies
+  T.ClearCookies = function (name) {
+    if (Cookies.get(name)) {
+      var expdate = new Date();
+      expdate.setTime(expdate.getTime() - (86400 * 1000 * 1));
+      Cookies.set(name, "", expdate);
+    }
+  };
+
+  function getCookieVal(offset) {
+    var endstr = document.cookie.indexOf(";", offset);
+    if (endstr == -1) {
+      endstr = document.cookie.length;
+    }
+    return unescape(document.cookie.substring(offset, endstr));
+  };
 
 })();

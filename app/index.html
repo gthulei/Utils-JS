@@ -30,6 +30,9 @@
    * @module numberTwo        // 手机号码显示后四位
    * @module format           // 日期格式化
    * @module diff             // 日期相差天数
+   * @module GetCookies       // 存Cookies
+   * @module GetCookies       // 取Cookies
+   * @module getCookieVal     // 清空Cookies
    *
    */
    console.info("类型检测"+"----->"+T.isType({}));
@@ -46,7 +49,10 @@
    console.info("手机号码截取中间四位"+"----->"+T.numberOne("17721034902"));
    console.info("手机号码显示后四位"+"----->"+T.numberTwo("17721034902"));
    var d = new Date()
-   console.info("日期格式化"+"----->"+d.format('yyyy/MM/dd'))
-   console.info("时差"+"----->"+d.format('yyyy/MM/dd')+"-"+d.diff( new Date("2017-05-10")))
+   console.info("日期格式化"+"----->"+d.format('yyyy/MM/dd'));
+   console.info("时差"+"----->"+d.format('yyyy/MM/dd')+"-"+d.diff( new Date("2017-05-10")));
+   T.SetCookies("name","胡雷");
+//   T.ClearCookies("name");
+   console.info(T.GetCookies("name"));
  </script>
 </html>
