@@ -8,7 +8,9 @@
   <!--endbuild-->
 </head>
 <body>
-  <h2>utils</h2>
+  <h1>utils</h1>
+  <div id="d"></div>
+  <div id="c"></div>
 </body>
 <!--build:js js/utils.min.js-->
 <script src="./js/utils.js"></script>
@@ -30,9 +32,10 @@
    * @module numberTwo        // 手机号码显示后四位
    * @module format           // 日期格式化
    * @module diff             // 日期相差天数
-   * @module GetCookies       // 存Cookies
+   * @module SetCookies       // 存Cookies
    * @module GetCookies       // 取Cookies
-   * @module getCookieVal     // 清空Cookies
+   * @module ClearCookies     // 清空Cookies
+   * @module countDown        // 清空Cookies
    *
    */
    console.info("类型检测"+"----->"+T.isType({}));
@@ -54,5 +57,8 @@
    T.SetCookies("name","胡雷");
 //   T.ClearCookies("name");
    console.info(T.GetCookies("name"));
+   // 倒计时封装
+   T.countDown('2017/05/17/,10:10',document.querySelector("#d"));
+   T.countDown('2017/05/18/,10:10',document.querySelector("#c"));
  </script>
 </html>

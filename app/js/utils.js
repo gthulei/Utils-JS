@@ -15,15 +15,16 @@
  * @module numberOne        // 手机号码截取中间四位
  * @module numberTwo        // 手机号码显示后四位
  * @module format           // 日期格式化
- * @module GetCookies       // 存Cookies
+ * @module SetCookies       // 存Cookies
  * @module GetCookies       // 取Cookies
- * @module getCookieVal     // 清空Cookies
+ * @module ClearCookies     // 清空Cookies
+ * @module countDown        // 倒计时
  *
  */
 (function () {
   'use strict';
 
-  //暴露
+  // 暴露
   window.T = {};
 
   // 类型检测
@@ -94,7 +95,7 @@
   }
 
 
-  //日期格式化
+  // 日期格式化
   Date.prototype.format = function (pat) {
     var year = this.getFullYear();
     var month = this.getMonth() + 1;
@@ -174,5 +175,34 @@
     }
     return unescape(document.cookie.substring(offset, endstr));
   };
+
+  // 倒计时封装
+  T.countDown = function (date, target) {
+
+    var setTime = new Date(date).getTime(),
+      timer = null;
+
+    function core() {
+      var nowTime = new Date().getTime(),
+        leftTime = 0,
+        d = 0, h = 0, m = 0, s = 0;
+
+      leftTime = Math.ceil((setTime - nowTime) / 1000);
+      if (nowTime <= setTime) {
+        //按位非运算符，简单的理解就是改变运算数的符号并减去1,这里的意思去掉小数位
+        d = ~~(leftTime / 86400);
+        h = ~~(leftTime % 86400 / 3600);
+        m = ~~(leftTime % 86400 % 3600 / 60);
+        s = ~~(leftTime % 86400 % 3600 % 60);
+        timer = setTimeout(core, 1e3);
+      } else {
+        clearTimeout(timer);
+        timer = null;
+      }
+      target.innerHTML = '天' + d + ' 时' + h + ' 分' + m + ' 秒' + s;
+
+    }
+    core();
+  }
 
 })();
