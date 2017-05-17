@@ -8,7 +8,7 @@
 2.1、压缩文件调试：gulp serve:dist
 
 ### js常用工具封装
-`* @module isType           // 类型检测
+ * @module isType           // 类型检测
  * @module MAX              // 取数组最大值
  * @module MIN              // 取数组最小值
  * @module sort             // 数组排序加强
@@ -25,7 +25,7 @@
  * @module GetCookies       // 取Cookies
  * @module ClearCookies     // 清空Cookies
  * @module countDown        // 倒计时
-`
+ 
 ### js日历控件
 `datePicker.init('.datepicker');
 `
