@@ -6,11 +6,23 @@
   <!--build:css css/main.min.css-->
   <link rel="stylesheet" href="./css/index.css">
   <!--endbuild-->
+  <style type="text/css">
+    #box {
+      height: 2000px;
+      background-color: #f60;
+    }
+  </style>
 </head>
 <body>
   <h1>utils</h1>
   <div id="d"></div>
   <div id="c"></div>
+  <div id="box"></div>
+  <img imgLoad="./images/a.png" class="imgLoad">
+  <br>
+  <img imgLoad="./images/b.png" class="imgLoad">
+  <br>
+
 </body>
 <!--build:js js/utils.min.js-->
 <script src="./js/utils.js"></script>
@@ -36,6 +48,7 @@
    * @module GetCookies       // 取Cookies
    * @module ClearCookies     // 清空Cookies
    * @module countDown        // 清空Cookies
+   * @module lazyloadImg      // 懒加载
    *
    */
    console.info("类型检测"+"----->"+T.isType({}));
@@ -55,10 +68,12 @@
    console.info("日期格式化"+"----->"+d.format('yyyy/MM/dd'));
    console.info("时差"+"----->"+d.format('yyyy/MM/dd')+"-"+d.diff( new Date("2017-05-10")));
    T.SetCookies("name","胡雷");
-//   T.ClearCookies("name");
+   // T.ClearCookies("name");
    console.info(T.GetCookies("name"));
    // 倒计时封装
    T.countDown('2017/05/17/,10:10',document.querySelector("#d"));
    T.countDown('2017/05/18/,10:10',document.querySelector("#c"));
+   //懒加载
+   T.lazyloadImg(".imgLoad");
  </script>
 </html>

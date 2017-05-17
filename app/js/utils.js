@@ -19,7 +19,7 @@
  * @module GetCookies       // 取Cookies
  * @module ClearCookies     // 清空Cookies
  * @module countDown        // 倒计时
- *
+ * @module lazyloadImg      // 懒加载
  */
 (function () {
   'use strict';
@@ -205,4 +205,38 @@
     core();
   }
 
+  // 懒加载
+  var vievHeight;
+  // 获取窗口高度
+  if (window.innerHeight) {
+    vievHeight = window.innerHeight;
+  } else if ((document.body) && (document.body.clientHeight)) {
+    vievHeight = document.body.clientHeight;
+  }
+
+  function imgLoad(id) {
+    var scrollHeight;
+    // 滚动的高度
+    if (document.body.scrollTop) {
+      scrollHeight = document.body.scrollTop;
+    } else {
+      scrollHeight = document.documentElement.scrollTop;
+    }
+    var $img = document.querySelectorAll(id);
+    for (var i = 0; i < $img.length; i++) {
+      // 获取窗口高度 + 滚动的高度 - 元素到顶部的距离 > 0 表示在可视区域内
+      var y = vievHeight + scrollHeight - $img[i].offsetTop;
+      if (y > 0) {
+        $img[i].setAttribute("src", $img[i].getAttribute("imgLoad"));
+      }
+    }
+  }
+
+  // 懒加载
+  T.lazyloadImg = function (id) {
+    window.addEventListener("scroll", function() {
+      console.log("1");
+      imgLoad(id);
+    }, false)
+  }
 })();
