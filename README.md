@@ -25,7 +25,10 @@
  * @module GetCookies       // 取Cookies
  * @module ClearCookies     // 清空Cookies
  * @module countDown        // 倒计时
- 
+ * @module GetQueryString   // 取得url参数
+ * @module SubString        // 日期格式化
+ * @module ToDX             // 数字转大写
+ * @module dateWeek         // 得到当前星期
 ### js日历控件
 `datePicker.init('.datepicker');
 `
