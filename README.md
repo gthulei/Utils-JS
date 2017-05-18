@@ -5,7 +5,7 @@
 
 3、gulp打包
 
-2.1、压缩文件调试：gulp serve:dist
+4、压缩文件调试：gulp serve:dist
 
 ### js常用工具封装
  * @module isType           // 类型检测
