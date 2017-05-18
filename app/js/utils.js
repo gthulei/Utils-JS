@@ -1,6 +1,6 @@
 /**
  * Created by hulei on 2017/5/12.
- * version 0.2
+ * version 0.1
  *
  * @module isType           // 类型检测
  * @module MAX              // 取数组最大值
@@ -19,7 +19,10 @@
  * @module GetCookies       // 取Cookies
  * @module ClearCookies     // 清空Cookies
  * @module countDown        // 倒计时
- * @module lazyloadImg      // 懒加载
+ * @module GetQueryString   // 取得url参数
+ * @module SubString        // 日期格式化
+ * @module ToDX             // 数字转大写
+ * @module dateWeek         // 得到当前星期
  */
 (function () {
   'use strict';
@@ -202,6 +205,7 @@
       target.innerHTML = '天' + d + ' 时' + h + ' 分' + m + ' 秒' + s;
 
     }
+
     core();
   }
 
@@ -234,9 +238,63 @@
 
   // 懒加载
   T.lazyloadImg = function (id) {
-    window.addEventListener("scroll", function() {
+    window.addEventListener("scroll", function () {
       console.log("1");
       imgLoad(id);
     }, false)
   }
+
+  // 取得url参数
+  T.GetQueryString = function (name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)return unescape(r[2]);
+    return null;
+  },
+
+    //20160101日期格式化
+    T.SubString = function (str) {
+      var Str = str && str.toString();
+      return Str.substring(0, 4) + '-' + Str.substring(4, 6) + '-' + Str.substring(6, 8)
+    },
+
+    // 数字转大写
+    T.ToDX = function (n) {
+      if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
+      var unit = "仟佰拾亿仟佰拾万仟佰拾元角分", str = "";
+      n += "00";
+      var p = n.indexOf('.');
+      if (p >= 0) n = n.substring(0, p) + n.substr(p + 1, 2);
+      unit = unit.substr(unit.length - n.length);
+      for (var i = 0; i < n.length; i++) str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i);
+      return str.replace(/零(仟|佰|拾|角)/g, "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
+    }
+
+  // 得到当前星期几
+  T.dateWeek = function (datas) {
+    var array = new Array();
+    var date = datas;
+    array = date.split('-');
+    var ndate = new Date(array[0], parseInt(array[1] - 1), array[2]);
+    var weekArray = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+    var weekDay = weekArray[ndate.getDay()];
+    return weekDay
+  }
+
+  // 正则验证
+  var reg = {
+    pwdLength: /^.{6,20}$/,//6-20位密码
+    lx3: /([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)\+\`\-\=\[\]\\\{ \}\|\;\'\:\"\,\.\/\<\>\?])\1\1/,//判断是否包含三个连续字符
+    numStr: /[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/,//判断是否同时包含数字 字母
+    isChinaName: /^[\u4E00-\u9FA5]{1,6}$/,//验证中文名称
+    identityNo: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,//验证身份证
+    bankCard: /^\d{16}|\d{19}$/,// 验证银行卡号
+    phone: /^1[3|4|5|7|8]\d{9}$/, // 验证手机号
+    decimal: /^\d+\.?(\d{1,2})?$/, // 验证两位小数和数字
+    verifyImgCode: /^[0-9]{5}$/, // 图形验证为5位数字
+    verifySmsCode: /^[0-9]{6}$/, // 短信验证为6位数字
+    pwdReg0: /^(?![\\d]+$)(?![a-zA-Z]+$)(?![^\\da-zA-Z]+$).{6,20}$/, // 数字，大写字母，小写字母，特殊字符组合
+    pwdReg1: /^[0-9]{6,20}$/ // 6~20纯数字
+  }
+
 })();
