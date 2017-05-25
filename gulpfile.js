@@ -5,8 +5,8 @@ var gulp = require('gulp'),
   runSequence = require('run-sequence'),
   wiredep = require('wiredep').stream,
   browserSync = require('browser-sync').create(),
-  reload = browserSync.reload;
-
+  reload = browserSync.reload,
+  babel = require('gulp-babel');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('sass', function() {
@@ -24,6 +24,9 @@ gulp.task('html', ['sass'], function() {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe(jsFilter)
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe($.sourcemaps.init())
     .pipe($.uglify())
     .pipe($.rev())
