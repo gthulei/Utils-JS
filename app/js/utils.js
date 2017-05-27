@@ -297,4 +297,33 @@
     pwdReg1: /^[0-9]{6,20}$/ // 6~20纯数字
   }
 
+  // html5 本地存储
+  T.localStorageSet = function (k, v) {
+    if (T.isType(v) == 'Object') {
+      v = JSON.stringify(v);
+    }
+    localStorage.setItem(k, v);
+  }
+
+  T.localStorageGet = function (k) {
+    if (T.isType(localStorage.getItem(k)) == 'String') {
+      var v = JSON.parse(localStorage.getItem(k));
+    }
+    return v;
+  }
+
+  T.sessionStorageSet = function (k, v) {
+    if (T.isType(v) == 'Object') {
+      v = JSON.stringify(v);
+    }
+    sessionStorage.setItem(k, v);
+  }
+
+  T.sessionStorageGet = function (k) {
+    if (T.isType(sessionStorage.getItem(k)) == 'String') {
+      var v = JSON.parse(sessionStorage.getItem(k));
+    }
+    return v;
+  }
+
 })();

@@ -61,5 +61,12 @@
    console.log(T.ToDX("200"));
    // 得到当前星期
    console.log(T.dateWeek('2017-05-17'));
+   T.localStorageSet("user",{"name":"hulei","age":"26"});
+   console.log(T.localStorageGet("user"));
+   T.sessionStorageSet("user",{"name":"hulei","age":"26"});
+   console.log(T.sessionStorageGet("user").name);
+   T.localStorageSet("user",{"name":"hulei","age":"26"});
+   T.localStorageSet("mail","132453464654");
+   console.log(T.localStorageGet("mail"));
  </script>
 </html>
