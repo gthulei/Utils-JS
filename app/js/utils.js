@@ -373,7 +373,7 @@
 
     if (/linux/i.test(appVersion)) return'linux';
 
-    if (/iphone/i.test(userAgent) || /ipad/i.test(userAgent) || /ipod/i.test(userAgent)) return'ios';
+    if (/iphone/i.test(userAgent) || /ipad/i.test(userAgent) || /ipod/i.test(userAgent)) return 'ios';
 
     if (/android/i.test(userAgent)) return'android';
 
