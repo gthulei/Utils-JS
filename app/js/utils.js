@@ -333,6 +333,7 @@
     return v;
   }
 
+  // 获取元素
   T.el = function (el) {
     return document.querySelector(el);
   }
