@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="./css/index.css">
   <!--endbuild-->
   <style type="text/css">
-    #box {
-      height: 2000px;
-      background-color: #f60;
-    }
+    /*#box {*/
+      /*height: 2000px;*/
+      /*background-color: #f60;*/
+    /*}*/
   </style>
 </head>
 <body>
@@ -22,7 +22,7 @@
   <br>
   <img imgLoad="./images/b.png" class="imgLoad">
   <br>
-
+  <div class="test t3"></div>
 </body>
 <!--build:js js/utils.min.js-->
 <script src="./js/utils.js"></script>
@@ -61,6 +61,7 @@
    console.log(T.ToDX("200"));
    // 得到当前星期
    console.log(T.dateWeek('2017-05-17'));
+   // localStorage
    T.localStorageSet("user",{"name":"hulei","age":"26"});
    console.log(T.localStorageGet("user"));
    T.sessionStorageSet("user",{"name":"hulei","age":"26"});
@@ -68,5 +69,11 @@
    T.localStorageSet("user",{"name":"hulei","age":"26"});
    T.localStorageSet("mail","132453464654");
    console.log(T.localStorageGet("mail"));
+   var t = T.el('.test');
+   T.addClass(t,'t2');
+   T.addClass(t,'t2')
+   T.removeClass(t,'t3')
+   console.log(T.getOS());
+   console.log(T.randomNum(100,200));
  </script>
 </html>

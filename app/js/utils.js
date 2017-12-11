@@ -23,6 +23,13 @@
  * @module SubString        // 日期格式化
  * @module ToDX             // 数字转大写
  * @module dateWeek         // 得到当前星期
+ * @module el               // 获取元素
+ * @module hasClass         // 判断元素是否有class
+ * @module addClass         // 添加class
+ * @module removeClass      // 移除class
+ * @module getOS            // 获取操作系统类型
+ * @module randomNum        // 生成指定范围随机数
+ * @module isUrl            // isUrl
  */
 (function () {
   'use strict';
@@ -248,7 +255,7 @@
   T.GetQueryString = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null)return unescape(r[2]);
+    if (r != null) return unescape(r[2]);
     return null;
   },
 
@@ -326,4 +333,58 @@
     return v;
   }
 
+  T.el = function (el) {
+    return document.querySelector(el);
+  }
+
+  // 判断元素是否有某个class
+  T.hasClass = function (ele, cls) {
+    return (new RegExp('(\\s|^)' + cls + '(\\s|$)')).test(ele.className);
+  }
+
+  // 为元素添加class
+  T.addClass = function (ele, cls) {
+    if (!T.hasClass(ele, cls)) {
+      ele.className += ' ' + cls;
+    }
+  }
+
+  // 为元素移除class
+  T.removeClass = function (ele, cls) {
+    if (T.hasClass(ele, cls)) {
+      var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+      ele.className = ele.className.replace(reg, ' ');
+    }
+  }
+
+  // 获取操作系统类型
+  T.getOS = function () {
+
+    var userAgent = 'navigator' in window && 'userAgent' in navigator && navigator.userAgent.toLowerCase() || '';
+
+    var vendor = 'navigator' in window && 'vendor' in navigator && navigator.vendor.toLowerCase() || '';
+
+    var appVersion = 'navigator' in window && 'appVersion' in navigator && navigator.appVersion.toLowerCase() || '';
+
+    if (/mac/i.test(appVersion)) return'MacOSX';
+
+    if (/win/i.test(appVersion)) return'windows';
+
+    if (/linux/i.test(appVersion)) return'linux';
+
+    if (/iphone/i.test(userAgent) || /ipad/i.test(userAgent) || /ipod/i.test(userAgent)) return'ios';
+
+    if (/android/i.test(userAgent)) return'android';
+
+    if (/win/i.test(appVersion) && /phone/i.test(userAgent)) return'windowsPhone';
+  }
+
+  // 生成指定范围随机数
+  T.randomNum = function (min, max) {
+
+    return Math.floor(min + Math.random() * (max - min));
+  }
+
+  // isUrl
+  T.isUrl = function (str) {return/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str);}
 })();
