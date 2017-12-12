@@ -29,6 +29,13 @@
  * @module SubString        // 日期格式化
  * @module ToDX             // 数字转大写
  * @module dateWeek         // 得到当前星期
+ * @module el               // 获取元素
+ * @module hasClass         // 判断元素是否有class
+ * @module addClass         // 添加class
+ * @module removeClass      // 移除class
+ * @module getOS            // 获取操作系统类型
+ * @module randomNum        // 生成指定范围随机数
+ * @module isUrl            // isUrl
 ### js日历控件
 `datePicker.init('.datepicker');
 `
