@@ -31,7 +31,7 @@
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
  */
-(function () {
+(function (window , undefined) {
   'use strict';
 
   // 暴露
@@ -388,4 +388,4 @@
 
   // isUrl
   T.isUrl = function (str) {return/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str);}
-})();
+})(window);
