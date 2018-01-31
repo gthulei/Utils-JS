@@ -23,11 +23,56 @@
   <img imgLoad="./images/b.png" class="imgLoad">
   <br>
   <div class="test t3"></div>
+  <select id="province">
+   
+  </select>
+  <select id="city">
+  </select>
+
 </body>
 <!--build:js js/utils.min.js-->
 <script src="./js/utils.js"></script>
+<script src="./js/area.js"></script>
 <!--endbuild-->
  <script type="text/javascript">
+  var linkage = {
+    area:area,
+    tempArea:{
+      province:[],
+      city:[]
+    },
+    init:function(){
+     for (var i in area) {
+       this.tempArea.province.push(`<option value="${area[i].areaCode}">${area[i].areaName}</option>`);
+     }
+     for (var i in area[0].city) {
+       this.tempArea.city.push(`<option value="${area[0].city[i].areaCode}">${area[0].city[i].areaName}</option>`);
+     }
+     this.el("#province").innerHTML = this.tempArea.province.join(",");
+     this.el("#city").innerHTML = this.tempArea.city.join(",");
+     return this;
+    },
+    el:function(el){
+      return document.querySelector(el);
+    },
+    change:function(){
+      var _this = this;
+      this.el("#province").addEventListener("change", function (e) {
+        _this.tempArea.city = [];
+        for (var i in area) {
+          if(area[i].areaCode == e.target.value){
+            for (var t in area[i].city) {
+              _this.tempArea.city.push(`<option value="${area[i].city[t].areaCode}">${area[i].city[t].areaName}</option>`);
+          }
+          _this.el("#city").innerHTML = _this.tempArea.city.join(",");
+          return;
+          }
+        }
+        });
+    }
+  }
+
+  linkage.init().change();
 
    console.info("类型检测"+"----->"+T.isType({}));
    var arr =[13,24,3,51];
