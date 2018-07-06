@@ -36,6 +36,7 @@
  * @module getOS            // 获取操作系统类型
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
+ * @module numberFormat     // numberFormat 金额格式化
 ### js日历控件
 `datePicker.init('.datepicker');
 `

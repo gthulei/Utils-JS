@@ -30,8 +30,9 @@
  * @module getOS            // 获取操作系统类型
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
+ * @module numberFormat     // numberFormat 金额格式化
  */
-(function (window , undefined) {
+(function (window, undefined) {
   'use strict';
 
   // 暴露
@@ -367,17 +368,17 @@
 
     var appVersion = 'navigator' in window && 'appVersion' in navigator && navigator.appVersion.toLowerCase() || '';
 
-    if (/mac/i.test(appVersion)) return'MacOSX';
+    if (/mac/i.test(appVersion)) return 'MacOSX';
 
-    if (/win/i.test(appVersion)) return'windows';
+    if (/win/i.test(appVersion)) return 'windows';
 
-    if (/linux/i.test(appVersion)) return'linux';
+    if (/linux/i.test(appVersion)) return 'linux';
 
     if (/iphone/i.test(userAgent) || /ipad/i.test(userAgent) || /ipod/i.test(userAgent)) return 'ios';
 
-    if (/android/i.test(userAgent)) return'android';
+    if (/android/i.test(userAgent)) return 'android';
 
-    if (/win/i.test(appVersion) && /phone/i.test(userAgent)) return'windowsPhone';
+    if (/win/i.test(appVersion) && /phone/i.test(userAgent)) return 'windowsPhone';
   }
 
   // 生成指定范围随机数
@@ -387,5 +388,52 @@
   }
 
   // isUrl
-  T.isUrl = function (str) {return/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str);}
+  T.isUrl = function (str) {
+    return /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str);
+  }
+
+  // 金额格式化
+  T.numberFormat = function (number, filla = false, narrow = false, roundtag = 'ceil', decimals = 2, dec_point = '.', thousands_sep = ',') {
+    /*
+    * 参数说明：
+    * number：要格式化的数字
+    * filla：小数位不足是否补位 (默认不补位)
+    * narrow：小数位后数字缩小 (默认不缩小)
+    * roundtag:舍入参数 "ceil" 向上取,"floor"向下取,"round" 四舍五入 (默认 "ceil")
+    * decimals：保留几位小数 (默认2位)
+    * dec_point：小数点符号 (默认.)
+    * thousands_sep：千分位符号 (默认,)
+    * */
+    number = (number + '').replace(/[^0-9+-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+      prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+      sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+      dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+      s = '',
+      toFixedFix = function (n, prec) {
+
+        var k = Math.pow(10, prec);
+
+
+        return '' + parseFloat(Math[roundtag](parseFloat((n * k).toFixed(prec * 2))).toFixed(prec * 2)) / k;
+      };
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    var re = /(-?\d+)(\d{3})/;
+    while (re.test(s[0])) {
+      s[0] = s[0].replace(re, "$1" + sep + "$2");
+    }
+
+    if (filla) {
+      if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        var arrays = [];
+        arrays.length = (prec - s[1].length + 1);
+        s[1] += arrays.join('0');
+      }
+    }
+    if (narrow) {
+      return s;
+    }
+    return s.join(dec);
+  }
 })(window);
