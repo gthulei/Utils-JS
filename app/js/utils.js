@@ -82,7 +82,7 @@
 
   // 校验字符空
   T.isNull = function (value) {
-    return value === undefined || value === null || this == "";
+    return value === undefined || value === null || value == "";
   }
 
   // 检验身份证
@@ -393,7 +393,13 @@
   }
 
   // 金额格式化
-  T.numberFormat = function (number, filla = false, narrow = false, roundtag = 'ceil', decimals = 2, dec_point = '.', thousands_sep = ',') {
+  T.numberFormat = function (options) {
+    options.filla = options.filla || false;
+    options.narrow = options.narrow || false;
+    options.roundtag = options.roundtag || 'ceil';
+    options.decimals = options.decimals || 2;
+    options.decPoint = options.decPoint || '.';
+    options.thousandsSep = options.thousandsSep || ',';
     /*
     * 参数说明：
     * number：要格式化的数字
@@ -401,21 +407,21 @@
     * narrow：小数位后数字缩小 (默认不缩小)
     * roundtag:舍入参数 "ceil" 向上取,"floor"向下取,"round" 四舍五入 (默认 "ceil")
     * decimals：保留几位小数 (默认2位)
-    * dec_point：小数点符号 (默认.)
-    * thousands_sep：千分位符号 (默认,)
+    * decPoint：小数点符号 (默认.)
+    * thousandsSep：千分位符号 (默认,)
     * */
-    number = (number + '').replace(/[^0-9+-Ee.]/g, '');
-    var n = !isFinite(+number) ? 0 : +number,
-      prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-      sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-      dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+    options.number = (options.number + '').replace(/[^0-9+-Ee.]/g, '');
+    var n = !isFinite(+options.number) ? 0 : +options.number,
+      prec = !isFinite(+options.decimals) ? 0 : Math.abs(options.decimals),
+      sep = (typeof options.thousandsSep === 'undefined') ? ',' : options.thousandsSep,
+      dec = (typeof options.decPoint === 'undefined') ? '.' : options.decPoint,
       s = '',
       toFixedFix = function (n, prec) {
 
         var k = Math.pow(10, prec);
 
 
-        return '' + parseFloat(Math[roundtag](parseFloat((n * k).toFixed(prec * 2))).toFixed(prec * 2)) / k;
+        return '' + parseFloat(Math[options.roundtag](parseFloat((n * k).toFixed(prec * 2))).toFixed(prec * 2)) / k;
       };
     s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
     var re = /(-?\d+)(\d{3})/;
@@ -423,7 +429,7 @@
       s[0] = s[0].replace(re, "$1" + sep + "$2");
     }
 
-    if (filla) {
+    if (options.filla) {
       if ((s[1] || '').length < prec) {
         s[1] = s[1] || '';
         var arrays = [];
@@ -431,7 +437,7 @@
         s[1] += arrays.join('0');
       }
     }
-    if (narrow) {
+    if (options.narrow) {
       return s;
     }
     return s.join(dec);
