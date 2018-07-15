@@ -1,11 +1,11 @@
 ;
-(function() {
+(function () {
 
   //数据
   var datePicker = {};
 
   // 获取一个月的数据
-  datePicker.getMonthData = function(year, month) {
+  datePicker.getMonthData = function (year, month) {
 
     var result = [];
 
@@ -76,7 +76,7 @@
   //渲染
   var monthData, $wrapper;
 
-  datePicker.buildUi = function(year, month) {
+  datePicker.buildUi = function (year, month) {
     monthData = datePicker.getMonthData(year, month);
     var d = new Date(),
       currentDate = fullYear = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
@@ -125,7 +125,7 @@
     return html;
   }
 
-  datePicker.render = function(direction) {
+  datePicker.render = function (direction) {
     var year, month;
     if (monthData) {
       year = monthData.year;
@@ -153,13 +153,13 @@
     $wrapper.innerHTML = html
   };
 
-  datePicker.init = function(input) {
+  datePicker.init = function (input) {
 
     var $input = document.querySelector(input);
 
     datePicker.render()
 
-    $input.addEventListener('focus', function() {
+    $input.addEventListener('focus', function () {
       $wrapper.classList.add('ui-datepicker-container-show');
       var left = $input.offsetLeft;
       var top = $input.offsetTop + $input.offsetHeight;
@@ -167,7 +167,7 @@
       $wrapper.style.top = top + 2 + 'px';
     }, false)
 
-    $wrapper.addEventListener('click', function(e) {
+    $wrapper.addEventListener('click', function (e) {
       var $target = e.target;
       if (!$target.classList.contains('ui-datepicker-btn')) {
         return false;
@@ -180,7 +180,7 @@
 
     }, false)
 
-    $wrapper.addEventListener('click', function(e) {
+    $wrapper.addEventListener('click', function (e) {
       var $target = e.target;
       if ($target.tagName.toLowerCase() !== 'td') {
         return false;
@@ -198,7 +198,7 @@
 
   function format(date) {
     var result = '';
-    var padding = function(num) {
+    var padding = function (num) {
       if (num <= 9) {
         return '0' + num;
       }

@@ -138,45 +138,31 @@
   }
 
   // 设置Cookies
-  T.SetCookies = function (name, value) {
-    var argv = arguments;
-    var argc = arguments.length;
-    var expires = (argc > 2) ? argv[2] : null;
-    var path = (argc > 3) ? argv[3] : '/';
-    var domain = (argc > 4) ? argv[4] : null;
-    var secure = (argc > 5) ? argv[5] : false;
-    document.cookie = name + "=" + escape(value) +
-      ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
-      ((path == null) ? "" : ("; path=" + path)) +
-      ((domain == null) ? "" : ("; domain=" + domain)) +
-      ((secure == true) ? "; secure" : "");
+  T.SetCookies = function (key, value, exdays) {
+    var exdate = new Date();
+    exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+    document.cookie = key + "=" + value + ";path=/;expires=" + exdate.toGMTString();
   };
 
   // 读取Cookies
-  T.GetCookies = function (name) {
-    var arg = name + "=";
-    var alen = arg.length;
-    var clen = document.cookie.length;
-    var i = 0;
-    var j = 0;
-    while (i < clen) {
-      j = i + alen;
-      if (document.cookie.substring(i, j) == arg)
-        return getCookieVal(j);
-      i = document.cookie.indexOf(" ", i) + 1;
-      if (i == 0)
-        break;
+  T.GetCookies = function (key) {
+    if (document.cookie.length > 0) {
+      var arr = document.cookie.split('; '); //这里显示的格式需要切割一下可输出看下
+      var cookieObj = {};
+      for (var i = 0; i < arr.length; i++) {
+        let arr2 = arr[i].split('='); //再次切割
+        cookieObj[arr2[0]] = arr2[1];
+      }
+      if (cookieObj[key]) {
+        return cookieObj[key];
+      }
+      return null;
     }
-    return null;
   };
 
   // 清除Cookies
-  T.ClearCookies = function (name) {
-    if (Cookies.get(name)) {
-      var expdate = new Date();
-      expdate.setTime(expdate.getTime() - (86400 * 1000 * 1));
-      Cookies.set(name, "", expdate);
-    }
+  T.ClearCookies = function (key) {
+    T.SetCookies(key, '', -1);
   };
 
   function getCookieVal(offset) {
@@ -196,7 +182,10 @@
     function core() {
       var nowTime = new Date().getTime(),
         leftTime = 0,
-        d = 0, h = 0, m = 0, s = 0;
+        d = 0,
+        h = 0,
+        m = 0,
+        s = 0;
 
       leftTime = Math.ceil((setTime - nowTime) / 1000);
       if (nowTime <= setTime) {
@@ -254,11 +243,11 @@
 
   // 取得url参数
   T.GetQueryString = function (name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
-  },
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+    },
 
     //20160101日期格式化
     T.SubString = function (str) {
@@ -269,7 +258,8 @@
     // 数字转大写
     T.ToDX = function (n) {
       if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
-      var unit = "仟佰拾亿仟佰拾万仟佰拾元角分", str = "";
+      var unit = "仟佰拾亿仟佰拾万仟佰拾元角分",
+        str = "";
       n += "00";
       var p = n.indexOf('.');
       if (p >= 0) n = n.substring(0, p) + n.substr(p + 1, 2);
@@ -291,12 +281,12 @@
 
   // 正则验证
   var reg = {
-    pwdLength: /^.{6,20}$/,//6-20位密码
-    lx3: /([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)\+\`\-\=\[\]\\\{ \}\|\;\'\:\"\,\.\/\<\>\?])\1\1/,//判断是否包含三个连续字符
-    numStr: /[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/,//判断是否同时包含数字 字母
-    isChinaName: /^[\u4E00-\u9FA5]{1,6}$/,//验证中文名称
-    identityNo: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,//验证身份证
-    bankCard: /^\d{16}|\d{19}$/,// 验证银行卡号
+    pwdLength: /^.{6,20}$/, //6-20位密码
+    lx3: /([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)\+\`\-\=\[\]\\\{ \}\|\;\'\:\"\,\.\/\<\>\?])\1\1/, //判断是否包含三个连续字符
+    numStr: /[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/, //判断是否同时包含数字 字母
+    isChinaName: /^[\u4E00-\u9FA5]{1,6}$/, //验证中文名称
+    identityNo: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, //验证身份证
+    bankCard: /^\d{16}|\d{19}$/, // 验证银行卡号
     phone: /^1[3|4|5|7|8]\d{9}$/, // 验证手机号
     decimal: /^\d+\.?(\d{1,2})?$/, // 验证两位小数和数字
     verifyImgCode: /^[0-9]{5}$/, // 图形验证为5位数字
@@ -401,15 +391,15 @@
     options.decPoint = options.decPoint || '.';
     options.thousandsSep = options.thousandsSep || ',';
     /*
-    * 参数说明：
-    * number：要格式化的数字
-    * filla：小数位不足是否补位 (默认不补位)
-    * narrow：小数位后数字缩小 (默认不缩小)
-    * roundtag:舍入参数 "ceil" 向上取,"floor"向下取,"round" 四舍五入 (默认 "ceil")
-    * decimals：保留几位小数 (默认2位)
-    * decPoint：小数点符号 (默认.)
-    * thousandsSep：千分位符号 (默认,)
-    * */
+     * 参数说明：
+     * number：要格式化的数字
+     * filla：小数位不足是否补位 (默认不补位)
+     * narrow：小数位后数字缩小 (默认不缩小)
+     * roundtag:舍入参数 "ceil" 向上取,"floor"向下取,"round" 四舍五入 (默认 "ceil")
+     * decimals：保留几位小数 (默认2位)
+     * decPoint：小数点符号 (默认.)
+     * thousandsSep：千分位符号 (默认,)
+     * */
     options.number = (options.number + '').replace(/[^0-9+-Ee.]/g, '');
     var n = !isFinite(+options.number) ? 0 : +options.number,
       prec = !isFinite(+options.decimals) ? 0 : Math.abs(options.decimals),

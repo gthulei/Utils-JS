@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title></title>
@@ -8,26 +9,30 @@
   <!--endbuild-->
   <style type="text/css">
     /*#box {*/
+
     /*height: 2000px;*/
+
     /*background-color: #f60;*/
+
     /*}*/
   </style>
 </head>
-<body>
-<h1>utils</h1>
-<div id="d"></div>
-<div id="c"></div>
-<div id="box"></div>
-<img imgLoad="./images/a.png" class="imgLoad">
-<br>
-<img imgLoad="./images/b.png" class="imgLoad">
-<br>
-<div class="test t3"></div>
-<select id="province">
 
-</select>
-<select id="city">
-</select>
+<body>
+  <h1>utils</h1>
+  <div id="d"></div>
+  <div id="c"></div>
+  <div id="box"></div>
+  <img imgLoad="./images/a.png" class="imgLoad">
+  <br>
+  <img imgLoad="./images/b.png" class="imgLoad">
+  <br>
+  <div class="test t3"></div>
+  <select id="province">
+
+  </select>
+  <select id="city">
+  </select>
 
 </body>
 <!--build:js js/utils.min.js-->
@@ -62,7 +67,8 @@
         for (var i in area) {
           if (area[i].areaCode == e.target.value) {
             for (var t in area[i].city) {
-              _this.tempArea.city.push(`<option value="${area[i].city[t].areaCode}">${area[i].city[t].areaName}</option>`);
+              _this.tempArea.city.push(
+                `<option value="${area[i].city[t].areaCode}">${area[i].city[t].areaName}</option>`);
             }
             _this.el("#city").innerHTML = _this.tempArea.city.join(",");
             return;
@@ -90,9 +96,9 @@
   var d = new Date()
   console.info("日期格式化" + "----->" + d.format('yyyy/MM/dd'));
   console.info("时差" + "----->" + d.format('yyyy/MM/dd') + "-" + d.diff(new Date("2017-05-10")));
-  T.SetCookies("name", "胡雷");
+  T.SetCookies("name", "胡雷", 10);
   // T.ClearCookies("name");
-  console.info(T.GetCookies("name"));
+  // console.info(T.GetCookies("name"));
   // 倒计时封装
   T.countDown('2017/05/17/,10:10', document.querySelector("#d"));
   T.countDown('2017/05/18/,10:10', document.querySelector("#c"));
@@ -107,11 +113,20 @@
   // 得到当前星期
   console.log(T.dateWeek('2017-05-17'));
   // localStorage
-  T.localStorageSet("user", {"name": "hulei", "age": "26"});
+  T.localStorageSet("user", {
+    "name": "hulei",
+    "age": "26"
+  });
   console.log(T.localStorageGet("user"));
-  T.sessionStorageSet("user", {"name": "hulei", "age": "26"});
+  T.sessionStorageSet("user", {
+    "name": "hulei",
+    "age": "26"
+  });
   console.log(T.sessionStorageGet("user").name);
-  T.localStorageSet("user", {"name": "hulei", "age": "26"});
+  T.localStorageSet("user", {
+    "name": "hulei",
+    "age": "26"
+  });
   T.localStorageSet("mail", "132453464654");
   console.log(T.localStorageGet("mail"));
   var t = T.el('.test');
@@ -120,7 +135,12 @@
   T.removeClass(t, 't3')
   console.log(T.getOS());
   console.log(T.randomNum(100, 200));
-  console.log(T.numberFormat({number:100000.5343}))
-  console.log(T.numberFormat({number:100000.511343}))
+  console.log(T.numberFormat({
+    number: 100000.5343
+  }))
+  console.log(T.numberFormat({
+    number: 100000.511343
+  }))
 </script>
+
 </html>
