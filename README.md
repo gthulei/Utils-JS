@@ -1,5 +1,5 @@
 
-1、cnpm install
+1、cnpm install && bower install
 
 2、gulp serve
 
@@ -37,6 +37,7 @@
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
  * @module numberFormat     // numberFormat 金额格式化
+ * @module skuGroup         // sku组合
 ### js日历控件
 `datePicker.init('.datepicker');
 `

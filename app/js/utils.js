@@ -31,6 +31,7 @@
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
  * @module numberFormat     // numberFormat 金额格式化
+ * @module skuGroup         // sku组合
  */
 (function (window, undefined) {
   'use strict';
@@ -432,5 +433,37 @@
       return s;
     }
     return s.join(dec);
+  }
+
+  // sku
+  T.skuGroup=function (doubleArrays) {
+    var len = doubleArrays.length
+    if (len >= 2) {
+      var arr1 = doubleArrays[0]
+      var arr2 = doubleArrays[1]
+      var len1 = doubleArrays[0].length
+      var len2 = doubleArrays[1].length
+      var newlen = len1 * len2
+      var temp = new Array(newlen)
+      var index = 0
+      for (var i = 0; i < len1; i++) {
+        for (var j = 0; j < len2; j++) {
+          temp[index] = arr1[i] + '*' + arr2[j]
+          index++
+        }
+      }
+      var newArray = new Array(len - 1)
+      newArray[0] = temp
+      if (len > 2) {
+        var _count = 1
+        for (var i = 2; i < len; i++) {
+          newArray[_count] = doubleArrays[i]
+          _count++
+        }
+      }
+      return T.skuGroup(newArray)
+    } else {
+      return doubleArrays[0]
+    }
   }
 })(window);
