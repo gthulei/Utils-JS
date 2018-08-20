@@ -436,34 +436,32 @@
   }
 
   // sku
-  T.skuGroup=function (doubleArrays) {
-    var len = doubleArrays.length
+  T.skuGroup = function (arrays) {
+    var len = arrays.length;
     if (len >= 2) {
-      var arr1 = doubleArrays[0]
-      var arr2 = doubleArrays[1]
-      var len1 = doubleArrays[0].length
-      var len2 = doubleArrays[1].length
-      var newlen = len1 * len2
-      var temp = new Array(newlen)
-      var index = 0
-      for (var i = 0; i < len1; i++) {
-        for (var j = 0; j < len2; j++) {
-          temp[index] = arr1[i] + '*' + arr2[j]
-          index++
+      var arrOne = arrays[0];
+      var arrTwo = arrays[1];
+      var index = 0;
+      var tmp = [];
+      for (var i = 0; i < arrOne.length; i++) {
+        for (var j = 0; j < arrTwo.length; j++) {
+          tmp[index] = `${arrOne[i]}/${arrTwo[j]}`;
+          index++;
         }
       }
-      var newArray = new Array(len - 1)
-      newArray[0] = temp
+      var newArr = [];
+      newArr[0] = tmp;
       if (len > 2) {
-        var _count = 1
-        for (var i = 2; i < len; i++) {
-          newArray[_count] = doubleArrays[i]
-          _count++
+        count = 1;
+        for (var y = 2; y < arrays.length; y++) {
+          newArr[count] = arrays[y];
+          count++;
         }
       }
-      return T.skuGroup(newArray)
+      return T.skuGroup(newArr)
     } else {
-      return doubleArrays[0]
+      return arrays[0]
     }
+
   }
 })(window);
