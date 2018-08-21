@@ -38,6 +38,7 @@
  * @module isUrl            // isUrl
  * @module numberFormat     // numberFormat 金额格式化
  * @module skuGroup         // sku组合
+ * @module filteremoji      // 过滤特殊字符,表情符号
 ### js日历控件
 `datePicker.init('.datepicker');
 `

@@ -32,6 +32,8 @@
  * @module isUrl            // isUrl
  * @module numberFormat     // numberFormat 金额格式化
  * @module skuGroup         // sku组合
+ * @module filteremoji      // 过滤特殊字符,表情符号
+ * 
  */
 (function (window, undefined) {
   'use strict';
@@ -464,4 +466,33 @@
     }
 
   }
+
+  // 过滤特殊字符,表情符号
+  T.filteremoji = function (v) {
+    var str = v;
+    var strArr = str.split(''),
+      result = '',
+      totalLen = 0;
+
+    for (var idx = 0; idx < strArr.length; idx++) {
+      if (totalLen >= 16) break;
+      var val = strArr[idx];
+      if (/[a-zA-Z]/.test(val)) {
+        totalLen = 1 + +totalLen;
+        result += val;
+      } else if (/[\u4e00-\u9fa5]/.test(val)) {
+        totalLen = 2 + +totalLen;
+        result += val;
+      } else if (/[\ud800-\udfff]/.test(val)) {
+        if (/[\ud800-\udfff]/.test(strArr[idx + 1])) {
+          idx++;
+        }
+        result += '口';
+      }
+    }
+    return result;
+  }
+
+
+
 })(window);
