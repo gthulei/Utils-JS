@@ -3,8 +3,8 @@
  * version 0.1
  *
  * @module isType           // 类型检测
- * @module MAX              // 取数组最大值
- * @module MIN              // 取数组最小值
+ * @module max              // 取数组最大值
+ * @module min              // 取数组最小值
  * @module sort             // 数组排序加强
  * @module trim             // 去除字符左右空格　
  * @module isMobile         // 校验手机号
@@ -15,13 +15,13 @@
  * @module numberOne        // 手机号码截取中间四位
  * @module numberTwo        // 手机号码显示后四位
  * @module format           // 日期格式化
- * @module SetCookies       // 存Cookies
- * @module GetCookies       // 取Cookies
- * @module ClearCookies     // 清空Cookies
+ * @module setCookies       // 存Cookies
+ * @module getCookies       // 取Cookies
+ * @module clearCookies     // 清空Cookies
  * @module countDown        // 倒计时
- * @module GetQueryString   // 取得url参数
- * @module SubString        // 日期格式化
- * @module ToDX             // 数字转大写
+ * @module getQueryString   // 取得url参数
+ * @module subString        // 日期格式化
+ * @module toDX             // 数字转大写
  * @module dateWeek         // 得到当前星期
  * @module el               // 获取元素
  * @module hasClass         // 判断元素是否有class
@@ -47,12 +47,12 @@
   }
 
   // 取数组最大值
-  T.MAX = function (arr) {
+  T.max = function (arr) {
     return Math.max.apply(null, arr);
   }
 
   // 取数组最小值
-  T.MIN = function (arr) {
+  T.min = function (arr) {
     return Math.min.apply(null, arr);
   }
 
@@ -141,14 +141,14 @@
   }
 
   // 设置Cookies
-  T.SetCookies = function (key, value, exdays) {
+  T.setCookies = function (key, value, exdays) {
     var exdate = new Date();
     exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
     document.cookie = key + "=" + value + ";path=/;expires=" + exdate.toGMTString();
   };
 
   // 读取Cookies
-  T.GetCookies = function (key) {
+  T.getCookies = function (key) {
     if (document.cookie.length > 0) {
       var arr = document.cookie.split('; '); //这里显示的格式需要切割一下可输出看下
       var cookieObj = {};
@@ -164,7 +164,7 @@
   };
 
   // 清除Cookies
-  T.ClearCookies = function (key) {
+  T.clearCookies = function (key) {
     T.SetCookies(key, '', -1);
   };
 
@@ -245,7 +245,7 @@
   }
 
   // 取得url参数
-  T.GetQueryString = function (name) {
+  T.getQueryString = function (name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);
@@ -253,13 +253,13 @@
     },
 
     //20160101日期格式化
-    T.SubString = function (str) {
+    T.subString = function (str) {
       var Str = str && str.toString();
       return Str.substring(0, 4) + '-' + Str.substring(4, 6) + '-' + Str.substring(6, 8)
     },
 
     // 数字转大写
-    T.ToDX = function (n) {
+    T.toDX = function (n) {
       if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
       var unit = "仟佰拾亿仟佰拾万仟佰拾元角分",
         str = "";
