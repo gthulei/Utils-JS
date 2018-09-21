@@ -30,6 +30,7 @@
  * @module getOS            // 获取操作系统类型
  * @module randomNum        // 生成指定范围随机数
  * @module isUrl            // isUrl
+ * @module thousands        // 金额千分位
  * @module numberFormat     // numberFormat 金额格式化
  * @module skuGroup         // sku组合
  * @module filteremoji      // 过滤特殊字符,表情符号
@@ -385,6 +386,12 @@
   T.isUrl = function (str) {
     return /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i.test(str);
   }
+
+  // 金额千分位
+  T.thousands = function(number){
+    return number.toLocaleString();
+  }
+ 
 
   // 金额格式化
   T.numberFormat = function (options) {
