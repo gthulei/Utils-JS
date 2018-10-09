@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>commonCss</title>
+</head>
+
+<body>
+  <style>
+    .clamp {
+      width: 200px;
+      display: -webkit-box;
+      font-size: 14px;
+      line-height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      /*设置超出样式为省略号*/
+      -webkit-line-clamp: 2;
+      /*设置2行应用省略*/
+      -webkit-box-orient: vertical;
+    }
+  </style>
+</body>
+<div>
+  <div class="clamp">
+    这样设置还要考虑一个极端的情况，就是标题不足两行。具体要看PM的需求，一是空出第二行的距离，二是让标题下边的元素顶上去
+  </div>
+</div>
+
+</html>
